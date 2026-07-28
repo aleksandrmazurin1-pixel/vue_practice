@@ -29,6 +29,22 @@
       Счётчик каунтера умножить на два: {{ doubleCounter }}
     </div>
 
+    <div>
+      <div v-for="post in sortedPosts" :key="post.id">{{ post.title }}</div>
+    </div>
+
+    <div v-for="post in posts" :key="post.id">
+      <input v-model="post.title">
+    </div>
+
+    <div>
+      <b>У тебя {{ shoppingList.length }} постов</b>
+    </div>
+
+      <div v-for="list in shoppingList" :key="list.id">
+        {{ list.name }}
+        <input type="text" v-model="list.name">
+      </div>
   </div>
 </template>
 
@@ -44,6 +60,14 @@ export default {
 
   data() {
     return {
+
+      shoppingList: [
+        {id: 1, name: 'Молоко'},  
+        {id: 2, name: 'Хлеб'},
+        {id: 3, name: 'Печенюхи'},
+        {id: 4, name: 'Колбаса'},
+      ],
+
       nickname: '',
       posts: [
         {id: 1, title: 'JS', body: 'Description post about JS'},
@@ -94,7 +118,11 @@ export default {
       return this.counter * 2;
     },
     sortedPosts() {
-      
+     return [...this.posts].sort((a, b) => {
+    if (a.title < b.title) return -1;
+    if (a.title > b.title) return 1;
+    return 0;
+      })
     }
   },
 
