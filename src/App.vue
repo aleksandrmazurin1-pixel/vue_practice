@@ -37,14 +37,38 @@
       <input v-model="post.title">
     </div>
 
-    <div>
+    <div class="inner-mars">
       <b>У тебя {{ shoppingList.length }} постов</b>
     </div>
 
-      <div v-for="list in shoppingList" :key="list.id">
-        {{ list.name }}
-        <input type="text" v-model="list.name">
+
+    <form @submit.prevent>
+      <div>
+
+        <input type="text" v-model="newItemName">
+        <button @click="addToShoppingList">Добавить задачу</button>
+
       </div>
+    </form>
+
+
+    <div v-for="list in shoppingList" :key="list.id">
+      {{ list.name }}
+    </div>
+
+
+    <form @submit.prevent>
+      <div class="inner-mars">
+        <input type="text" v-model="targetMovie">
+        <button @click="addFavoriteMovie">Добавить фильм</button>
+      </div>
+    </form>
+
+    <div v-for="movie in favoriteMovies" :key="movie.id">
+      {{ movie.name }}
+      <button @click="deleteMovie">delete</button>
+    </div>
+
   </div>
 </template>
 
@@ -60,13 +84,23 @@ export default {
 
   data() {
     return {
-
       shoppingList: [
-        {id: 1, name: 'Молоко'},  
+        {id: 1, name: 'Молоко'},
         {id: 2, name: 'Хлеб'},
         {id: 3, name: 'Печенюхи'},
         {id: 4, name: 'Колбаса'},
       ],
+
+      newItemName: '',
+
+      favoriteMovies: [
+        {id: 1, name: 'Batman'},
+        {id: 2, name: 'Robin'},
+        {id: 3, name: 'Joker'},
+        {id: 4, name: 'Karl'}
+      ],
+      movie: '',
+      targetMovie: '',
 
       nickname: '',
       posts: [
@@ -84,8 +118,36 @@ export default {
   },
 
   methods: {
+    deleteMovie() {
+      this.favoriteMovies = this.favoriteMovies.filter(m => m.id === this.movie.id)
+    },
+
+    addFavoriteMovie() {
+      if (this.targetMovie !== '') {
+        const pushMovie = {
+          id: crypto.randomUUID(),
+          name: this.targetMovie
+        }
+        this.favoriteMovies.push(pushMovie);
+        this.targetMovie = '';
+        console.log(this.favoriteMovies);
+      }
+    },
+
     incrementCounter() {
-      return this.counter++;
+      this.counter++;
+    },
+
+    addToShoppingList() {
+      if (this.newItemName !== '') {
+        const newItem = {
+          id: crypto.randomUUID(),
+          name: this.newItemName,
+        }
+        this.shoppingList.push(newItem);
+        this.newItemName = '';
+        console.log(this.shoppingList);
+      }
     },
 
     createPost() {
@@ -118,13 +180,18 @@ export default {
       return this.counter * 2;
     },
     sortedPosts() {
-     return [...this.posts].sort((a, b) => {
-    if (a.title < b.title) return -1;
-    if (a.title > b.title) return 1;
-    return 0;
+      return [...this.posts].sort((a, b) => {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
       })
     }
   },
+  watch: {
+    nickname(newVal, oldVal) {
+      console.log(newVal, oldVal);
+    }
+  }
 
 }
 </script>
@@ -139,4 +206,10 @@ export default {
 .app {
   padding: 50px;
 }
+
+.inner-mars {
+  margin-top: 20px;
+  background-color: #d3d3d3;
+}
+
 </style>
