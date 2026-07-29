@@ -54,6 +54,7 @@
 
     <div v-for="list in shoppingList" :key="list.id">
       {{ list.name }}
+      <button @click="deleteList(list.id)">DELETE</button>
     </div>
 
 
@@ -66,7 +67,7 @@
 
     <div v-for="movie in favoriteMovies" :key="movie.id">
       {{ movie.name }}
-      <button @click="deleteMovie">delete</button>
+      <button @click="deleteMovie(movie.id)">delete</button>
     </div>
 
   </div>
@@ -99,7 +100,6 @@ export default {
         {id: 3, name: 'Joker'},
         {id: 4, name: 'Karl'}
       ],
-      movie: '',
       targetMovie: '',
 
       nickname: '',
@@ -118,8 +118,9 @@ export default {
   },
 
   methods: {
-    deleteMovie() {
-      this.favoriteMovies = this.favoriteMovies.filter(m => m.id === this.movie.id)
+    deleteMovie(movieId) {
+      this.favoriteMovies = this.favoriteMovies.filter(m => m.id !== movieId);
+      console.log(this.favoriteMovies);
     },
 
     addFavoriteMovie() {
@@ -148,6 +149,10 @@ export default {
         this.newItemName = '';
         console.log(this.shoppingList);
       }
+    },
+
+    deleteList(listId) {
+      this.shoppingList = this.shoppingList.filter(list => list.id !== listId);
     },
 
     createPost() {
