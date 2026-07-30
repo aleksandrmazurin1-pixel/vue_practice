@@ -9,11 +9,12 @@
       <!-- ⚠️ Здесь не хватает :key="post.id" — уникального идентификатора для Vue,
            чтобы он понимал, какой DOM-элемент к какому объекту массива относится
            при добавлении/удалении элементов. Без него Vue выдаст предупреждение в консоли. -->
-      <div class="post" v-for="post in posts">
+      <div class="post" v-for="post in posts" :key="post.id">
         <!-- {{ post.title }} — интерполяция: подставляет значение поля title
              текущего поста прямо в текст. Реактивна: если posts изменится, текст обновится сам -->
         <div><strong>Header: </strong>{{ post.title }}</div>
         <div><strong>Description: </strong>{{ post.body }}</div>
+        <button class="btn" @click="$emit('delete-post', post.id)">Удалить Задачу</button>
       </div>
     </div>
   </div>
@@ -40,6 +41,16 @@ export default {
 .post {
   padding: 15px;
   border: 2px solid #439019;
+  margin-top: 10px;
+}
+
+.btn {
+  background-color: #439019;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  padding: 8px 15px;
+  border: none;
   margin-top: 10px;
 }
 </style>

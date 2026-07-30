@@ -1,7 +1,14 @@
 <template>
   <div class="app">
     <post-form @create-post="addPost"/>
-    <post-list :posts="posts"/>
+    <post-list :posts="posts" @delete-post="delPost"/>
+
+    <button class="btn" @click="ggg">Клик</button>
+    <div>
+      <p v-if="isLoggedIn">Ты вошел в аккаунт</p>
+      <p v-else>Ты yyyttt вошел в аккаунт</p>
+
+    </div>
 
     <div>Привет {{ username }}, у тебя {{ posts.length }} постов</div>
     <div>
@@ -12,9 +19,6 @@
       Console
     </button>
 
-    <div>
-      <p v-if="isLoggedIn === true">Ты вошел в аккаунт</p>
-    </div>
 
     <div> coooo {{ counter }}
       <button @click="incrementCounter">++</button>
@@ -51,6 +55,7 @@ import PostList from "./components/PostList.vue";
 import MovieFilms from "@/components/MovieFilms.vue";
 import ShoppingList from "./components/ShoppingList.vue";
 
+
 export default {
   components: {
     PostForm,
@@ -61,8 +66,6 @@ export default {
 
   data() {
     return {
-
-
       nickname: '',
       posts: [
         {id: 1, title: 'JS', body: 'Description post about JS'},
@@ -80,34 +83,26 @@ export default {
   },
 
   methods: {
+    ggg() {
+      if (this.isLoggedIn) {
+      this.isLoggedIn = false;
+      } else {
+        this.isLoggedIn = true;
+      }
+    },
+
+    delPost(postId) {
+      this.posts = this.posts.filter(post => post.id !== postId);
+
+      console.log(this.posts);
+    },
 
     addPost(post) {
-      this.posts.push({ id: crypto.randomUUID(), ...post });
+      this.posts.push({id: crypto.randomUUID(), ...post});
     },
 
     incrementCounter() {
       this.counter++;
-    },
-
-    createPost() {
-      if (this.title !== '' || this.body !== '') {
-        const newPost = {
-          id: crypto.randomUUID(),
-          title: this.title,
-          body: this.body
-        }
-        this.posts.push(newPost);
-        this.title = '';
-        this.body = '';
-      }
-    },
-
-    inputTitle(event) {
-      this.title = event.target.value;
-    },
-
-    inputBody(event) {
-      this.body = event.target.value;
     },
     sayHello() {
       console.log('Привет из sayHello!');
@@ -145,6 +140,16 @@ export default {
 .app {
   background-color: #e1e1e1;
   padding: 50px;
+}
+
+.btn {
+  background-color: #439019;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  padding: 8px 15px;
+  border: none;
+  margin-top: 10px;
 }
 
 </style>
