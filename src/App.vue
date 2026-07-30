@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <post-form/>
+    <post-form @create-post="addPost"/>
     <post-list :posts="posts"/>
 
     <div>Привет {{ username }}, у тебя {{ posts.length }} постов</div>
@@ -70,6 +70,7 @@ export default {
         {id: 3, title: 'JS3', body: 'Description post about JS3'},
         {id: 4, title: 'JS4', body: 'Description post about JS4'}
       ],
+
       username: 'Alex',
       docsLink: 'https://vuejs.org/guide/introduction.html',
       linkText: 'Открыть доки',
@@ -80,10 +81,13 @@ export default {
 
   methods: {
 
+    addPost(post) {
+      this.posts.push({ id: crypto.randomUUID(), ...post });
+    },
+
     incrementCounter() {
       this.counter++;
     },
-
 
     createPost() {
       if (this.title !== '' || this.body !== '') {

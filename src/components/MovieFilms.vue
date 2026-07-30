@@ -1,7 +1,8 @@
 <template>
 
   <h3 class="inner-mars">Любимые фильмы пользователя {{ username }}</h3>
-  <p>Меня зовут {{ pppp }}</p>
+  <p>Меня зовут {{ pppp() }}</p>
+  <p>Меня зовут {{ ppp }}</p>
   <div>
     <form @submit.prevent>
       <div >
@@ -23,7 +24,7 @@ export default {
   data() {
     return {
 
-
+      ppp: this.username,
 
       favoriteMovies: [
         {id: 1, name: 'Batman'},
@@ -41,7 +42,7 @@ export default {
     },
 
     pppp() {
-      this.username;
+      return this.username;
     },
 
     addFavoriteMovie() {
@@ -72,3 +73,4 @@ export default {
   background-color: #d3d3d3;
 }
 </style>
+

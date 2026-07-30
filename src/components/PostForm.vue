@@ -3,7 +3,7 @@
     <!-- @submit.prevent — сокращение для @submit="event => event.preventDefault()".
          .prevent — модификатор события, автоматически вызывает preventDefault(),
          чтобы страница не перезагружалась при отправке формы (стандартное поведение <form> в HTML) -->
-    <form @submit.prevent>
+    <form @submit.prevent="submitPost">
       <h4> Создание поста</h4>
 
       <!-- v-model="post.title" — двусторонняя привязка (сахар сразу для двух вещей):
@@ -51,6 +51,11 @@ export default {
         title: "",
         body: "",
       }
+    }
+  },
+  methods: {
+    submitPost() {
+      this.$emit("create-post", this.post);
     }
   }
 
