@@ -37,38 +37,10 @@
       <input v-model="post.title">
     </div>
 
-    <div class="inner-mars">
-      <b>У тебя {{ shoppingList.length }} постов</b>
-    </div>
+  <shopping-list/>
 
 
-    <form @submit.prevent>
-      <div>
-
-        <input type="text" v-model="newItemName">
-        <button @click="addToShoppingList">Добавить задачу</button>
-
-      </div>
-    </form>
-
-
-    <div v-for="list in shoppingList" :key="list.id">
-      {{ list.name }}
-      <button @click="deleteList(list.id)">DELETE</button>
-    </div>
-
-
-    <form @submit.prevent>
-      <div class="inner-mars">
-        <input type="text" v-model="targetMovie">
-        <button @click="addFavoriteMovie">Добавить фильм</button>
-      </div>
-    </form>
-
-    <div v-for="movie in favoriteMovies" :key="movie.id">
-      {{ movie.name }}
-      <button @click="deleteMovie(movie.id)">delete</button>
-    </div>
+    <movie-films/>
 
   </div>
 </template>
@@ -76,31 +48,21 @@
 <script>
 import PostForm from "./components/PostForm.vue";
 import PostList from "./components/PostList.vue";
+import MovieFilms from "@/components/MovieFilms.vue";
+import ShoppingList from "./components/ShoppingList.vue";
 
 export default {
   components: {
     PostForm,
-    PostList
+    PostList,
+    MovieFilms,
+    ShoppingList
   },
 
   data() {
     return {
-      shoppingList: [
-        {id: 1, name: 'Молоко'},
-        {id: 2, name: 'Хлеб'},
-        {id: 3, name: 'Печенюхи'},
-        {id: 4, name: 'Колбаса'},
-      ],
 
-      newItemName: '',
 
-      favoriteMovies: [
-        {id: 1, name: 'Batman'},
-        {id: 2, name: 'Robin'},
-        {id: 3, name: 'Joker'},
-        {id: 4, name: 'Karl'}
-      ],
-      targetMovie: '',
 
       nickname: '',
       posts: [
@@ -118,42 +80,12 @@ export default {
   },
 
   methods: {
-    deleteMovie(movieId) {
-      this.favoriteMovies = this.favoriteMovies.filter(m => m.id !== movieId);
-      console.log(this.favoriteMovies);
-    },
-
-    addFavoriteMovie() {
-      if (this.targetMovie !== '') {
-        const pushMovie = {
-          id: crypto.randomUUID(),
-          name: this.targetMovie
-        }
-        this.favoriteMovies.push(pushMovie);
-        this.targetMovie = '';
-        console.log(this.favoriteMovies);
-      }
-    },
 
     incrementCounter() {
       this.counter++;
     },
 
-    addToShoppingList() {
-      if (this.newItemName !== '') {
-        const newItem = {
-          id: crypto.randomUUID(),
-          name: this.newItemName,
-        }
-        this.shoppingList.push(newItem);
-        this.newItemName = '';
-        console.log(this.shoppingList);
-      }
-    },
 
-    deleteList(listId) {
-      this.shoppingList = this.shoppingList.filter(list => list.id !== listId);
-    },
 
     createPost() {
       if (this.title !== '' || this.body !== '') {
