@@ -1,8 +1,10 @@
 <template>
 
+  <h3 class="inner-mars">Любимые фильмы пользователя {{ username }}</h3>
+  <p>Меня зовут {{ pppp }}</p>
   <div>
     <form @submit.prevent>
-      <div class="inner-mars">
+      <div >
         <input type="text" v-model="targetMovie">
         <button @click="addFavoriteMovie">Добавить фильм</button>
       </div>
@@ -20,6 +22,9 @@
 export default {
   data() {
     return {
+
+
+
       favoriteMovies: [
         {id: 1, name: 'Batman'},
         {id: 2, name: 'Robin'},
@@ -35,6 +40,10 @@ export default {
       console.log(this.favoriteMovies);
     },
 
+    pppp() {
+      this.username;
+    },
+
     addFavoriteMovie() {
       if (this.targetMovie !== '') {
         const pushMovie = {
@@ -45,6 +54,12 @@ export default {
         this.targetMovie = '';
         console.log(this.favoriteMovies);
       }
+    }
+  },
+  props: {
+    username: {
+      type: String,
+      required: true
     }
   }
 }

@@ -37,10 +37,10 @@
       <input v-model="post.title">
     </div>
 
-  <shopping-list/>
+    <shopping-list/>
 
 
-    <movie-films/>
+    <movie-films :username="username"/>
 
   </div>
 </template>
@@ -63,7 +63,6 @@ export default {
     return {
 
 
-
       nickname: '',
       posts: [
         {id: 1, title: 'JS', body: 'Description post about JS'},
@@ -84,7 +83,6 @@ export default {
     incrementCounter() {
       this.counter++;
     },
-
 
 
     createPost() {
@@ -141,12 +139,8 @@ export default {
 }
 
 .app {
+  background-color: #e1e1e1;
   padding: 50px;
-}
-
-.inner-mars {
-  margin-top: 20px;
-  background-color: #d3d3d3;
 }
 
 </style>
