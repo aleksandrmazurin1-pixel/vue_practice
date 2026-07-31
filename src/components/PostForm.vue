@@ -56,6 +56,8 @@ export default {
   methods: {
     submitPost() {
       this.$emit("create-post", this.post);
+      this.post.title = "";
+      this.post.body = "";
     }
   }
 
@@ -85,3 +87,5 @@ export default {
   margin-bottom: 20px;
 }
 </style>
+
+
