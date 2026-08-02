@@ -1,9 +1,7 @@
 <template>
-
   <div class="inner-mars">
     <b>У тебя {{ shoppingList.length }} постов</b>
   </div>
-
 
   <form @submit.prevent>
     <div>
@@ -14,17 +12,21 @@
     </div>
   </form>
 
-
-  <div v-for="list in shoppingList" :key="list.id">
+  <card v-for="list in shoppingList" :key="list.id">
     {{ list.name }}
     <button @click="deleteList(list.id)">DELETE</button>
-  </div>
-
+  </card>
 
 </template>
 
 <script>
+import Card from "@/components/Card.vue";
+
 export default {
+  components: {
+    Card,
+  },
+
   data() {
     return {
       shoppingList: [
@@ -46,7 +48,6 @@ export default {
         }
         this.shoppingList.push(newItem);
         this.newItemName = '';
-        console.log(this.shoppingList);
       }
     },
 

@@ -1,23 +1,26 @@
 <template>
   <div>
-    <div>
-      <!-- v-for="post in posts" — аналог обычного цикла for...of в JS:
-           for (const post of posts) { ... }
-           "posts" (множественное число) — проп, пришедший снаружи (из App.vue).
-           "post" (единственное число) — имя, которое мы сами придумали для каждого элемента цикла. -->
 
-      <!-- ⚠️ Здесь не хватает :key="post.id" — уникального идентификатора для Vue,
-           чтобы он понимал, какой DOM-элемент к какому объекту массива относится
-           при добавлении/удалении элементов. Без него Vue выдаст предупреждение в консоли. -->
-      <div class="post" v-for="post in posts" :key="post.id">
-        <!-- {{ post.title }} — интерполяция: подставляет значение поля title
-             текущего поста прямо в текст. Реактивна: если posts изменится, текст обновится сам -->
-        <div><strong>Header: </strong>{{ post.title }}</div>
-        <div><strong>Description: </strong>{{ post.body }}</div>
-        <button class="btn" @click="$emit('delete-post', post.id)">Удалить Задачу</button>
-      </div>
+    <!-- v-for="post in posts" — аналог обычного цикла for...of в JS:
+         for (const post of posts) { ... }
+         "posts" (множественное число) — проп, пришедший снаружи (из App.vue).
+         "post" (единственное число) — имя, которое мы сами придумали для каждого элемента цикла. -->
+
+    <!-- ⚠️ Здесь не хватает :key="post.id" — уникального идентификатора для Vue,
+         чтобы он понимал, какой DOM-элемент к какому объекту массива относится
+         при добавлении/удалении элементов. Без него Vue выдаст предупреждение в консоли. -->
+    <div class="post" v-for="post in posts" :key="post.id" :class="{favorite: post.isFavorite}">
+
+      <!-- {{ post.title }} — интерполяция: подставляет значение поля title
+           текущего поста прямо в текст. Реактивна: если posts изменится, текст обновится сам -->
+      <div><strong>Header: </strong>{{ post.title }}</div>
+      <div><strong>Description: </strong>{{ post.body }}</div>
+      <button class="btn" @click="$emit('change-favorite', post.id)">В избранное
+      </button>
+      <button class="btn" @click="$emit('delete-post', post.id)">Удалить Задачу</button>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -29,7 +32,7 @@ export default {
       type: Array,     // ожидаем именно массив
       required: true   // проп обязателен — без него Vue выдаст предупреждение
     }
-  }
+  },
 }
 </script>
 
@@ -44,6 +47,10 @@ export default {
   margin-top: 10px;
 }
 
+.favorite {
+  background-color: #e8efe0;
+}
+
 .btn {
   background-color: #439019;
   color: #fff;
@@ -52,5 +59,6 @@ export default {
   padding: 8px 15px;
   border: none;
   margin-top: 10px;
+  margin-right: 10px;
 }
 </style>
